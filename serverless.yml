@@ -1,0 +1,23 @@
+service: lam-nodejs
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  iam:
+   role:
+    statements:
+    - Effect: Allow
+      Action:
+      - "ses:*"
+      Resource:
+      - "*"
+
+functions:
+  createContact:
+    handler: handler.createContact
+    events:
+    - http:
+        path: /mail
+        method: POST
+        cors: true
